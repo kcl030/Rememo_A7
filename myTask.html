@@ -7,6 +7,16 @@
     <meta name="author" content="">
     <link rel="stylesheet" href="css/bootstrap.css"/>
     <title>ReMemo MyTasks</title>
+    <style>
+      label{
+      display:inline-block;
+      width:150px;
+      }
+      input{
+      display:inline-block;
+      justify-content: flex-end;
+      }
+    </style>
   <head>
 
   <body style="background-color: #6fc3df;">
@@ -124,14 +134,15 @@
 
 		<!-- Modal for Adding task-->
     <div id="addTask" class="modal fade" role="dialog">
-      <div class="modal-dialog">
+      <div class="modal-dialog" >
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: #c5e8ec;">
           <div class="modal-body">
-            <h1>Add Task</h1>
+            <h1 style="font-family: 'Cedarville Cursive', cursive; font-size: 40px; margin: 0 auto;"><center>Add Task</center></h1>
+            <!--See styling in header -->
 						<form id="addTask" action="/myTask.html">
-  						<label>I need to: <br> </label><input type="text" name="newTask" id="newTask"> <br>
-              <label>Time (ex. 2:30pm): <br> </label><input type="text" name="time" id = "time">
+  						<label>I need to: <br> </label><input type="text" name="newTask" id="newTask" text-align = "right"> <br>
+              <label>Time (ex. 2:30pm): <br> </label><input type="text" name="time" id = "time" text-align = "right">
 						</form>
 						<br>
           </div>
