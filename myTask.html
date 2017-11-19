@@ -1,0 +1,217 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Cedarville+Cursive" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <title>ReMemo MyTasks</title>
+  <head>
+
+  <body style="background-color: #6fc3df;">
+
+    <!-- Header for My Tasks -->
+    <div class="container">
+      <div class="row">
+        <a href="index.html"><img src="whitebackbutton.png" height="75" width="75"/></a>
+        <div style="font-family: 'Cedarville Cursive', cursive; font-size: 100px; margin: 0 auto;">
+          My Tasks
+        </div>
+      </div>
+    </div>
+
+		<!-- List Items -->
+		<div class="container">
+			<div class="row">
+        <td bgcolor="#FFFFFF" style="line-height:10px;" colspan=3>&nbsp;</td>
+      </div>
+
+			<div class="row">
+				<script>
+					//function append ( elString, parent ) {
+						//var div = document.createElement( "p" );
+						//div.innerHTML = elString;
+						//document.querySelector( parent || "body" ).appendChild( div.firstChild );
+					//}
+
+					// Retrieving tasks from Task List
+					var TaskArray1 = JSON.parse(localStorage.getItem("localArray"));                                                        //CHANGE THIS ARRAY NAME
+
+					// Adds each task as a list item
+					for(var t in TaskArray1){
+						var Container = document.createElement('div');
+						Container.className = 'container';
+
+						var InfoCol = document.createElement('div');
+						InfoCol.className = 'xs col-8';
+
+						var newTaskElement = document.createElement('li');
+						newTaskElement.className = "task";
+						newTaskElement.innerHTML = TaskArray1[t];
+						newTaskElement.Id = TaskArray1[t];
+
+						InfoCol.appendChild(newTaskElement);
+						Container.appendChild(InfoCol);
+						document.body.appendChild(Container)
+					}
+
+					// Create a "close" button and append it to each list item
+					var myNodelist = document.getElementsByTagName("LI");
+					var i;
+					for (i = 0; i < myNodelist.length; i++) {
+						var span = document.createElement("SPAN");
+						var txt = document.createTextNode("\u00D7");
+						span.className = "close";
+						span.appendChild(txt);
+						myNodelist[i].appendChild(span);
+					}
+
+					// Click on a close button to hide the current list item
+					var close = document.getElementsByClassName("close");
+					var i = close.length;
+					while(i > 0){
+						i--;
+						//button that hides the task
+						close[i].onclick = function() {
+							var taskItem = this.parentElement;
+							taskItem.style.display = "none";
+
+							//removes task from Task Array and remakes task array
+							newTaskList = [];
+
+							for (j = 0; j < TaskArray1.length; j++) {
+								if (TaskArray1[j] != taskItem.Id) {
+									newTaskList.push(TaskArray1[j]);
+								}
+								else {
+									deletedArray1 = JSON.parse(localStorage.getItem("DeletedArray"));
+									if (deletedArray1 == null) {
+										deletedArray1 = [];
+									}
+									deletedArray1.push(TaskArray1[j]);
+		          		localStorage.setItem("DeletedArray", JSON.stringify(deletedArray1));
+								}
+							}
+
+							localStorage.setItem("localArray", JSON.stringify(newTaskList));
+							location.reload();
+						}
+					}
+					</script>
+				</div>
+
+
+
+			<!-- Handlebars template for tasks
+				<script id="task-template" type="text/x-handlebars-template">
+					<div class="tasks">
+						<li> {{this}} <button type="button" class="btn btn-sm" onclick="removeTask()">X</button> </li>
+					</div>
+				</script>
+
+			<ul id="myTaskList">
+				 local task list will be inserted here
+			</ul> -->
+
+			<div class="row">
+          <button id="AddTaskbutton" type="button" class="btn btn-default btn-custom-block" data-toggle="modal" data-target="#addTask">Add Task</button>
+          <td bgcolor="#FFFFFF" style="line-width:5px;" colspan=3>&nbsp;</td>
+          <button id="ClearTaskbutton" type="button" class="btn btn-default btn-custom-block" data-toggle="modal" onclick="removeAll()">Clear Tasks</button>
+      </div>
+
+		</div>
+
+		<!-- Modal for Adding task-->
+    <div id="addTask" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body">
+            <h1>Add Task</h1>
+						<form id="addTask" action="/myTask.html">
+  						<label>I need to: <br> </label><input type="text" name="newTask" id="newTask"> <br>
+              <label>Time (ex. 2:30pm): <br> </label><input type="text" name="time" id = "time">
+						</form>
+						<br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addTask()">Rememo!</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Nevermind</button>
+          </div>
+        </div>
+      </div>
+		</div>
+
+			<!-- storing and removing tasks -->
+			<script>
+				// local array
+				var taskArray = JSON.parse(localStorage.getItem("localArray"));
+				if (taskArray == null) {
+					taskArray = new Array;
+				}
+
+				//Add task function
+				function addTask() {
+          var StringToAdd = "I need to "
+					var taskToAdd = StringToAdd + document.getElementById("newTask").value;
+          taskToAdd = taskToAdd + " at ";
+          taskToAdd = taskToAdd + document.getElementById("time").value;
+					if (document.getElementById("newTask").value.length == 0) {
+						alert("Please enter a task");
+						return 0;
+					}
+					taskArray.push(taskToAdd);
+					var stringArray = JSON.stringify(taskArray);
+					localStorage.setItem("localArray", stringArray);
+					document.getElementById("newTask").value = "";
+					location.reload();
+				}
+
+				// Helper to move tasks up in the array
+				function resetList(x) {
+					var arrayToSet = this;
+					for (var d = x; d < arrayToSet.length - 1; d++) {
+						arrayToSet[d] = arrayToSet [d+1];
+					}
+				}
+
+				function removeAll() {
+
+          var otherArray = localStorage.getItem("DeletedArray");
+          var pushArray = localStorage.getItem("localArray");
+
+					// Initializing cleared task array if empty
+          if(otherArray == null){
+            otherArray = [];
+          } else {
+            otherArray = JSON.parse(otherArray);
+          }
+
+					var stringversion = JSON.parse(pushArray);
+					if(stringversion.length == 0) {
+						return 0;
+					}
+
+          localStorage.setItem("DeletedArray", JSON.stringify(otherArray.concat(stringversion)));
+					localStorage.setItem("localArray", null);
+					location.reload();
+				}
+
+			</script>
+
+
+  <!-- JS -->
+	<script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src ="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+	<script src="js/handlebars-v4.0.11.js"></script>
+	<!-- <script src="js/MyTask.js"></script> -->
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

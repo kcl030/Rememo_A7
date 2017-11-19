@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Cedarville+Cursive" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/counterstyle.css"/>
+    <title>ReMemo Homepage</title>
+  <head>
+
+  <!-- Script to make counter fancy    NOT WORKING -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+    <script src = "js/counter-count.js"> </script>
+
+
+  <body style="background-color: lightyellow;">
+
+    <!-- Logo -->
+    <div class="container">
+      <div class="row">
+        <div style="font-family: 'Cedarville Cursive', cursive; font-size: 100px; margin: 0 auto;">
+          ReMemo
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons that link to other pages -->
+    <div class="container">
+      <div class="row">
+        <div class="col-4">
+        </div>
+        <div class="col-4" style="text-align:center">
+          <a href="myTask.html" class="btn btn-lg btn-warning">My Tasks</a>
+          <a href="quiz.html" class="btn btn-lg btn-warning">Quiz Me!</a>
+          <a href="journal.html" class="btn btn-lg btn-warning">Journal</a>
+        </div>
+        <div class="col-4">
+        </div>
+      </div>
+    </div>
+
+
+  <!--Streak Count -->
+
+    <div class="counter">
+      <div class="container">
+          <div class="row">
+            <div class="col-4">
+            </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                  <div class="streak">
+                      <p class="streak-p">Streak!</p>
+                      <p class="counter-count" id = "StreakResult"</p>
+                  </div>
+              </div>
+          </div>
+          <div class="col-4">
+          </div>
+      </div>
+    </div>
+
+  </body>
+
+  <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src ="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+  <!--Streak PUll -->
+  <script>
+      if (localStorage.getItem("StreakNum") == null) {
+         localStorage.setItem("StreakNum",0);
+      }
+     	document.getElementById("StreakResult").innerHTML =
+  		localStorage.getItem("StreakNum");
+  </script>
+
+
+</html>

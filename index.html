@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<link href="https://fonts.googleapis.com/css?family=Cedarville+Cursive" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="stylesheet" href="css/counterstyle.css"/>
+		<title>ReMemo Homepage</title>
+	</head>
+  <body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="actions vertical">
+							<li><a href="login.html" class="button fit">Log In</a></li>
+							<li><a href="signup.html" class="button fit">Sign Up</a></li>
+							<li><a href="help.html" class="button fit">Help</a></li>
+						</ul>
+					</nav>
+
+				<!-- Banner -->
+				<div style="font-family: 'Cedarville Cursive', cursive; font-size: 100px; margin: 0 auto;">
+					ReMemo
+				</div>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- One -->
+							<section id="one" class="tiles">
+								<article>
+									<span class="image">
+										<img src="images/pic01.jpg" alt="" />
+									</span>
+									<header class="major">
+										<h3><a href="myTask.html" class="link">My Tasks</a></h3>
+									</header>
+								</article>
+								<article>
+									<span class="image">
+										<img src="images/pic02.jpg" alt="" />
+									</span>
+									<header class="major">
+										<h3><a href="quiz.html" class="link">Quiz Me!</a></h3>
+									</header>
+								</article>
+								<article>
+									<span class="image">
+										<img src="images/pic03.jpg" alt="" />
+									</span>
+									<header class="major">
+										<h3><a href="journal.html" class="link">Journal</a></h3>
+									</header>
+								</article>
+								<article>
+									<span class="image">
+										<img src="images/pic04.jpg" alt="" />
+									</span>
+									<header class="major">
+										<h3 id="StreakResult">Streak + </h3>
+									</header>
+								</article>
+							</section>
+
+					</div>
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+			<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery.min.js"><\/script>')</script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		  <script src ="js/popper.min.js"></script>
+		  <script src="js/bootstrap.min.js"></script>
+		  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		  <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+		  <!--Streak PUll -->
+		  <script>
+		      if (localStorage.getItem("StreakNum") == null) {
+		         localStorage.setItem("StreakNum",0);
+		      }
+		     	document.getElementById("StreakResult").innerHTML = "Streak: " +
+		  		localStorage.getItem("StreakNum");
+
+		  </script>
+	</body>
+</html>

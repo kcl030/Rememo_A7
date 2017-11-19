@@ -1,0 +1,135 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Cedarville+Cursive" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <title>ReMemo Journal</title>
+  <head>
+
+  <body style="background-color: #ec8d81;">
+
+    <!-- Header for journal -->
+    <div class="container">
+      <div class="row">
+        <a href="index.html"><img src="whitebackbutton.png" height="75" width="75"/></a>
+        <div style="font-family: 'Cedarville Cursive', cursive; font-size: 100px; margin: 0 auto;">
+          Journal
+          <br>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-4">
+        </div>
+        <div id="emptyJournal" class="col-6">
+
+        </div>
+        <div class="col-2">
+        </div>
+    </div>
+  </div>
+
+    <!-- Journal Items -->
+    <div class="container">
+      <div class="row">
+        <td bgcolor="#FFFFFF" style="line-height:10px;" colspan=3>&nbsp;</td>
+      </div>
+      <div class="row">
+        <script>
+
+        	function append ( elString, parent ) {
+          	var div = document.createElement( "p" );
+          	div.innerHTML = elString;
+          	document.querySelector( parent || "body" ).appendChild( div.firstChild );
+        	}
+
+					// Retrieving tasks deleted from Task List
+        	var JournalArray1  =  localStorage.getItem("DeletedArray");                                                        //CHANGE THIS ARRAY NAME
+        	var JournalArray = JSON.parse(JournalArray1);
+
+					// If no tasks to retrieve, print description
+          if (JournalArray == null) {
+            document.getElementById("emptyJournal").innerHTML = "The journal stores your old tasks that you completed. <br /> Clear Tasks from <strong> My Tasks </strong> to add them to your journal.";
+          }
+          if (JournalArray[0] == null || JournalArray1 == null || JournalArray1 == 0 || JournalArray[0] == 0 ) {      //buggy if refreshed.
+              var Nothing = document.createElement('div')
+              document.getElementById("emptyJournal").innerHTML = "The journal stores your old tasks that you completed. <br /> Clear Tasks from <strong> My Tasks </strong> to add them to your journal.";
+          }
+
+					// For loop
+          for(var t in JournalArray){
+
+            var Container = document.createElement('div');
+            Container.className = 'container';
+
+            var InfoCol = document.createElement('div');
+            InfoCol.className = 'xs col-8';
+
+            var newJTask = document.createElement('li');
+            newJTask.className = "task";
+            newJTask.innerHTML = JournalArray[t];
+            newJTask.Id = JournalArray[t];
+            InfoCol.appendChild(newJTask);
+            Container.appendChild(InfoCol);
+            document.body.appendChild(Container)
+          }
+
+          // Create a "close" button and append it to each list item
+          var myNodelist = document.getElementsByTagName("LI");
+          var i;
+          for (i = 0; i < myNodelist.length; i++) {
+          	var span = document.createElement("SPAN");
+          	var txt = document.createTextNode("\u00D7");
+          	span.className = "close";
+          	span.appendChild(txt);
+          	myNodelist[i].appendChild(span);
+          }
+
+          // Click on a close button to hide the current list item
+          var close = document.getElementsByClassName("close");
+          var i = close.length;
+          while(i--){
+            //button that hides the task
+            close[i].onclick = function() {
+            	var div = this.parentElement;
+            	div.style.display = "none";
+
+            	//removes task from Journal Array and remakes journal array
+            	newJournal = [];
+            	for (i = 0, j = JournalArray.length; i < j; i++) {
+                cur = JournalArray[i];
+                if (cur != div.Id) {
+                    newJournal.push(cur);
+                }
+            	}
+            	JournalArray = newJournal;
+
+            	localStorage.setItem("DeletedArray", JSON.stringify(newJournal));
+
+            	if (JournalArray[0] == null || JournalArray1 == null || JournalArray1 == 0 || JournalArray[0] == 0 ) {
+              	document.getElementById("emptyJournal").innerHTML = "The journal stores your old tasks that you completed. <br /> Clear Tasks from <strong> My Tasks </strong> to add them to your journal.";
+            	}
+
+          	}
+          }
+
+        </script>
+
+        </ul>
+      </div>
+    </div>
+  </body>
+
+  <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src ="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="js/ie10-viewport-bug-workaround.js"></script>
+</html>

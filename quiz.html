@@ -1,0 +1,222 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Cedarville+Cursive" rel="stylesheet">
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="stylesheet" href="css/bootstrap.css"/>
+      <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <title>ReMemo Quiz</title>
+  <head>
+
+  <body style="background-color: #8d82c4;">
+
+    <!-- The header of the page -->
+    <div class="container">
+      <div class="row">
+        <a href="index.html"><img src="whitebackbutton.png" height="75" width="75"/></a>
+        <div style="font-family: 'Cedarville Cursive', cursive; font-size: 100px; margin: 0 auto;">
+          Quiz
+        </div>
+      </div>
+    </div>
+    <!--Appears if MyTask is empty -->
+    <div class="container">
+      <div class="row">
+        <div class="col-4">
+        </div>
+        <div id="emptyTasks" class="col-4">
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz answers are buttons with modals-->
+    <div class="container">
+      <div class="row">
+        <td bgcolor="#FFFFFF" style="line-height:10px;" colspan=3>&nbsp;</td>
+      </div>
+      <div class="row">
+        <button id="buttonA" type="button" class="btn btn-default btn-block" data-toggle="modal"></button>
+      </div>
+      <div class="row">
+        <td bgcolor="#FFFFFF" style="line-height:10px;" colspan=3>&nbsp;</td>
+      </div>
+      <div class="row">
+        <button id="buttonB" type="button" class="btn btn-default btn-block" data-toggle="modal"></button>
+      </div>
+      <div class="row">
+        <td bgcolor="#FFFFFF" style="line-height:10px;" colspan=3>&nbsp;</td>
+      </div>
+      <div class="row">
+        <button id="buttonC" type="button" class="btn btn-default btn-block" data-toggle="modal"></button>
+      </div>
+      <div class="row">
+        <td bgcolor="#FFFFFF" style="line-height:10px;" colspan=3>&nbsp;</td>
+      </div>
+      <div class="row">
+        <button id="buttonD" type="button" class="btn btn-default btn-block" data-toggle="modal"></button>
+      </div>
+    </div>
+
+    <!-- Modal for the correct answer-->
+    <div id="correctAnswer" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body">
+            <h1>You have fantastic memory!</h1>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='index.html'">Close</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Modal for the incorrect answer-->
+    <div id="incorrectAnswer" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div id="correction" class="modal-body">
+            <h1>Yikes you need to improve your memory!</h1>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href='index.html'">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+  <!-- Streak Handler-->
+  <script>
+
+    function StreakAdd(){
+				if (localStorage.getItem("StreakNum") == null) {
+					localStorage.setItem("StreakNum", 0);
+				}
+        var result = parseInt(localStorage.getItem("StreakNum")) + 1 ;
+        var resultS = result.toString();
+        localStorage.setItem("StreakNum", resultS);
+
+    }
+
+    function Streak0(){
+        localStorage.setItem("StreakNum",0);
+    }
+
+		function randomCorrect() {
+			var answerStrings = localStorage.getItem("localArray");
+			var answerArray = JSON.parse(answerStrings);
+
+			if (answerArray == null) {
+				return null;
+			}
+
+			var randoNum = Math.floor(Math.random()*answerArray.length);
+
+			return answerArray[randoNum];
+		}
+
+    //randomizes the index of the button
+    function randomButton() {
+      var buttonIndex = new Array(3);
+      buttonIndex[0] = "A"
+      buttonIndex[1] = "B"
+      buttonIndex[2] = "C"
+      buttonIndex[3] = "D"
+
+      var randomNum = Math.floor(Math.random()*buttonIndex.length);
+      return buttonIndex[randomNum];
+    }
+
+    //generates the random questions to be asked in the quiz
+    function randomQuestions() {
+      var question = new Array(10)
+      question[0] = "I need to do groceries at 3:30pm";
+      question[1] = "I need to fold clothes at 2:45pm";
+      question[2] = "I need to do the dishes at 5:00pm";
+      question[3] = "I need to do the laundry at 2:15pm";
+      question[4] = "I need to cook dinner at 5:30pm";
+      question[5] = "I need to water the plants at 8:00am";
+      question[6] = "I need to vacuum at 9:30am";
+      question[7] = "I need to go to the gym at 1:30pm";
+      question[8] = "I need to pay the bills at 2:00pm";
+      question[9] = "I need to get a haircut at 3:30pm";
+      question[10] = "I need to make lunch at 11:00am";
+
+      var randomNum = Math.floor(Math.random()*question.length);
+      return question[randomNum];
+    }
+
+		var randomCorrectQ = randomCorrect();
+
+    //hides quiz if MyTask is empty
+    if (randomCorrectQ == null){
+
+      $("#buttonA").hide();
+      $("#buttonB").hide();
+      $("#buttonC").hide();
+      $("#buttonD").hide();
+
+      document.getElementById("emptyTasks").innerHTML = "You need to fill out <strong> My Tasks </strong> to take the quiz.";
+    }else{
+
+    //ensure no duplicates for random incorrect answers
+    var q1 = randomQuestions();
+    var q2 = randomQuestions();
+    var q3 = randomQuestions();
+    while (q1 == q2 || q1 == q3 || q2 == q3) {
+      q1 = randomQuestions();
+      q2 = randomQuestions();
+      q3 = randomQuestions();
+    }
+
+    //ensures no duplicates for random index of buttons
+    var correctIndex = randomButton();
+    var incorrect1 = randomButton();
+    var incorrect2 = randomButton();
+    var incorrect3 = randomButton();
+    while(correctIndex == incorrect1 || correctIndex == incorrect2 || correctIndex == incorrect3 ||
+          incorrect1 == incorrect2 || incorrect1 == incorrect3 || incorrect2 == incorrect3) {
+      correctIndex = randomButton();
+      incorrect1 = randomButton();
+      incorrect2 = randomButton();
+      incorrect3 = randomButton();
+    }
+
+    //change attribute of correct answer for streak and popup
+    $("#button" + correctIndex).attr('data-target','#correctAnswer');
+    $('#button' + correctIndex).attr('onclick','StreakAdd()');
+
+    //change attribute of incorrect answers for streak and popup
+    $('#button' + incorrect1).attr('data-target','#incorrectAnswer');
+    $('#button' + incorrect1).attr('onclick','Streak0()');
+    $('#button' + incorrect2).attr('data-target','#incorrectAnswer');
+    $('#button' + incorrect2).attr('onclick','Streak0()');
+    $('#button' + incorrect3).attr('data-target','#incorrectAnswer');
+    $('#button' + incorrect3).attr('onclick','Streak0()');
+
+    document.getElementById("button" + correctIndex).innerHTML = randomCorrectQ;
+    document.getElementById("button" + incorrect1).innerHTML = q1;
+    document.getElementById("button" + incorrect2).innerHTML = q2;
+    document.getElementById("button" + incorrect3).innerHTML = q3;
+
+    var CorrectString = "\"" + randomCorrectQ + "\"";
+
+    document.getElementById("correction").innerHTML = "Yikes you need to improve your memory! <br />  The correct answer is " +  CorrectString;
+  }
+  </script>
+
+  <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src ="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="js/ie10-viewport-bug-workaround.js"></script>
+</html>
